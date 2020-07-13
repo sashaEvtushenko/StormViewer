@@ -17,6 +17,8 @@ class ViewController: UITableViewController {
         title = "Storm Viewer"
         navigationController?.navigationBar.prefersLargeTitles = true
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareAppTapped))
+        
         let fileManager = FileManager.default
         let path = Bundle.main.resourcePath!
         let items = try! fileManager.contentsOfDirectory(atPath: path)
@@ -45,6 +47,12 @@ class ViewController: UITableViewController {
             destinationViewController.navBarTitle = "Picture \(indexPath.row + 1) of \(pictures.count)"
             navigationController?.pushViewController(destinationViewController, animated: true)
         }
+    }
+    
+    @objc func shareAppTapped() {
+        let activityViewController = UIActivityViewController(activityItems: ["Check out my app Storm Viewer.\nAmazing pictures already there.\nCheck it out!"], applicationActivities: [])
+        activityViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(activityViewController, animated: true)
     }
 
 }
